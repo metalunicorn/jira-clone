@@ -36,7 +36,13 @@ module.exports = {
       }
     ],
     'no-use-before-define': 'off',
-    '@typescript-eslint/no-use-before-define': ['error']
+    '@typescript-eslint/no-use-before-define': ['error'],
+    'prettier/prettier': [
+      'error',
+      {
+        endOfLine: 'auto'
+      }
+    ]
   },
   settings: {
     'import/resolver': {

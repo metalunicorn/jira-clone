@@ -1,19 +1,32 @@
+import { name } from '../../config';
 import { Todo } from '../../types';
 
 const initialState = {
-  todo: []
+  todos: []
 };
 
 export const todoReducer = (state = initialState, action: any) => {
   if (action.type === 'GET_ALL_TODO') {
-    return { ...state, todo: action.value };
+    return { ...state, todos: action.value };
   }
   if (action.type === 'CHANGE_STATUS') {
-    const index = state.todo.findIndex((item: Todo) => item.id === action.id);
-    const todo: Todo[] = [...state.todo];
-    todo[index].status = action.status;
+    const index = state.todos.findIndex((item: Todo) => item.id === action.id);
+    const todos: Todo[] = [...state.todos];
+    if (todos[index].status === name.inProgress) {
+      todos[index].status = name.done;
+      return {
+        todos
+      };
+    }
+    if (todos[index].status === name.done) {
+      todos[index].status = name.todo;
+      return {
+        todos
+      };
+    }
+    todos[index].status = name.inProgress;
     return {
-      todo
+      todos
     };
   }
   return state;

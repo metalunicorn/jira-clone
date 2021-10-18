@@ -4,6 +4,7 @@ import { ColumnBoard } from '../components/ColumnBoard';
 import { useTodoApi } from '../api/todosAPI';
 import { Title } from '../components/Title';
 import { TicketsList } from '../components/TicketsList';
+import { name } from '../config';
 
 export const Content = () => {
   const todoApi = useTodoApi();
@@ -43,9 +44,9 @@ export const Content = () => {
           margin: '10px'
         }}
       >
-        <ColumnBoard name="TODO" nextStage="IN_PROGRESS" />
-        <ColumnBoard name="IN_PROGRESS" nextStage="DONE" />
-        <ColumnBoard name="DONE" nextStage="TODO" />
+        <ColumnBoard name={name.todo} />
+        <ColumnBoard name={name.inProgress} />
+        <ColumnBoard name={name.done} />
       </Box>
     </>
   );

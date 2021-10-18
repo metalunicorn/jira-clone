@@ -6,13 +6,26 @@ import {
   ListItemButton,
   ListItemText
 } from '@mui/material';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { actionChangeStatus } from '../store/actions';
 import { RootState } from '../store/reducers/todo';
 import { Todo } from '../types';
 
 export const TicketsList = () => {
-  const todos = useSelector((state: RootState) => state);
-
+  const dataState = useSelector((state: RootState) => state);
+  const dispatch = useDispatch();
+  dataState.todos.sort((a: Todo, b: Todo) => {
+    if (a.status > b.status) {
+      return -1;
+    }
+    if (a.status < b.status) {
+      return 1;
+    }
+    return 0;
+  });
+  const changeStatus = (id: string): void => {
+    dispatch(actionChangeStatus(Number(id)));
+  };
   return (
     <List
       dense
@@ -25,7 +38,7 @@ export const TicketsList = () => {
         padding: '10px'
       }}
     >
-      {todos.todo.map((value: Todo) => {
+      {dataState.todos.map((value: Todo) => {
         const labelId = `checkbox-list-secondary-label-${value}`;
         return (
           <ListItem
@@ -37,7 +50,10 @@ export const TicketsList = () => {
               width: '100%'
             }}
           >
-            <ListItemButton>
+            <ListItemButton
+              id={`${value.id}`}
+              onClick={(e) => changeStatus(e.currentTarget?.id)}
+            >
               <ListItemAvatar>
                 <Avatar
                   alt={`Avatar n°${value.id}`}

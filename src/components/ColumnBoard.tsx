@@ -11,18 +11,21 @@ import { RootState } from '../store/reducers/todo';
 import { actionChangeStatus } from '../store/actions';
 import { Todo } from '../types';
 
-export const ColumnBoard = (props: { name: string; nextStage: string }) => {
+export const ColumnBoard = (props: { name: string }) => {
   const { name } = props;
-  const { nextStage } = props;
   const todo = useSelector((state: RootState) =>
-    state.todo.filter((item: Todo) => item.status === name)
+    state.todos.filter((item: Todo) => item.status === name)
   );
   const dispatch = useDispatch();
-  const changeStatus = (status: string, id: string): void => {
-    dispatch(actionChangeStatus(status, Number(id)));
+  const changeStatus = (id: string): void => {
+    dispatch(actionChangeStatus(Number(id)));
   };
   return (
-    <Box>
+    <Box
+      sx={{
+        width: '30%'
+      }}
+    >
       <Typography>{name}</Typography>
       <List
         dense
@@ -48,7 +51,7 @@ export const ColumnBoard = (props: { name: string; nextStage: string }) => {
             >
               <ListItemButton
                 id={`${value.id}`}
-                onClick={(e) => changeStatus(nextStage, e.currentTarget?.id)}
+                onClick={(e) => changeStatus(e.currentTarget?.id)}
               >
                 <ListItemAvatar>
                   <Avatar

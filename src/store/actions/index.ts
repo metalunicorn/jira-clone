@@ -5,8 +5,7 @@ export const actionGetAllTodos = (todo: Todo[]) => ({
   value: todo
 });
 
-export const actionChangeStatus = (status: string, id: number) => ({
+export const actionChangeStatus = (id: number) => ({
   type: 'CHANGE_STATUS',
-  status,
   id
 });
